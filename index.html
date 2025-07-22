@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+      <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md p-8">
+        <div class="flex justify-between items-center mb-6">
+          <h1 class="text-3xl font-bold text-gray-800">
+            Prediksi Tingkat Keparahan Gejala Autisme
+          </h1>
+          <div>
+            <span class="mr-4">Halo, {{ current_user.username }}!</span>
+            <a
+              href="{{ url_for('logout') }}"
+              class="text-blue-600 hover:underline"
+              >Logout</a
+            >
+          </div>
+        </div>
+        <form action="/predict" method="post" class="space-y-6">
+          <div class="grid grid-cols-1 gap-4">
+            {% set questions = [ "Apakah individu sering berfokus pada
+            suara-suara kecil yang tidak didengar oleh orang lain?", "Apakah
+            individu tidak mudah berkonsentrasi pada keseluruhan gambar dan
+            lebih berkonsentrasi pada detail-detail kecil?", "Apakah individu
+            sulit melacak percakapan beberapa orang yang berbeda dalam kelompok
+            sosial?", "Apakah individu merasa sulit untuk beralih antara
+            berbagai kegiatan?", "Apakah individu tidak tahu cara melanjutkan
+            percakapan?", "Apakah individu sulit berkomunikasi dalam percakapan
+            sosial?", "Apakah individu merasa kesulitan untuk memahami perasaan
+            karakter dalam cerita, ketika dibacakan sebuah cerita?", "Apakah
+            individu mengalami kesulitan dalam bermain peran atau bermain
+            imajinatif?", "Apakah individu sulit untuk mengetahui apa yang
+            seseorang pikirkan atau rasakan hanya dengan melihat ekspresi wajah
+            mereka?", "Apakah individu merasa kesulitan untuk mendapatkan teman
+            baru?" ] %} {% for q in questions %}
+            <div>
+              <label class="block text-gray-700 font-bold mb-2">
+                {{ q }}
+              </label>
+              <hr class="border-t border-gray-300 mb-2" />
+              <div class="flex items-center space-x-4 mt-2">
+                <!-- Opsi Disagree -->
+                <label class="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="A{{ loop.index }}"
+                    value="0"
+                    required
+                  />
+                  <span class="ml-2">Disagree</span>
+                </label>
+                <!-- Opsi Slightly Disagree -->
+                <label class="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="A{{ loop.index }}"
+                    value="0"
+                    required
+                  />
+                  <span class="ml-2">Slightly Disagree</span>
+                </label>
+                <!-- Opsi Slightly Agree -->
+                <label class="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="A{{ loop.index }}"
+                    value="1"
+                    required
+                  />
+                  <span class="ml-2">Slightly Agree</span>
+                </label>
+                <!-- Opsi Agree -->
+                <label class="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="A{{ loop.index }}"
+                    value="1"
+                    required
+                  />
+                  <span class="ml-2">Agree</span>
+                </label>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="text-center">
+            <input
+              type="submit"
+              value="Predict"
+              class="mt-4 bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition duration-300"
+            />
+          </div>
+        </form>
+        {% if prediction_text %}
+        <div class="mt-6 text-center">
+          <h2 class="text-xl font-semibold text-green-600">
+            {{ prediction_text }}
+          </h2>
+        </div>
+        {% endif %}
+        <div class="mt-6 text-center">
+          <a
+            href="{{ url_for('history') }}"
+            class="text-blue-600 hover:underline"
+            >Lihat History Prediksi</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

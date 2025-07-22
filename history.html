@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>History</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+      <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-8">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-gray-800">
+            History Prediksi untuk {{ current_user.username }}
+          </h2>
+          <div class="flex items-center space-x-4">
+            <a
+              href="{{ url_for('home') }}"
+              class="text-blue-600 hover:underline"
+              >Home</a
+            >
+            <a
+              href="{{ url_for('logout') }}"
+              class="text-blue-600 hover:underline"
+              >Logout</a
+            >
+            <form
+              action="{{ url_for('delete_history') }}"
+              method="post"
+              onsubmit="return confirm('Anda yakin ingin menghapus semua history?');"
+              class="inline-block"
+            >
+              <button
+                type="submit"
+                class="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 transition duration-300"
+              >
+                Hapus History
+              </button>
+            </form>
+          </div>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %} {% if category ==
+        'delete_success' %}
+        <div id="flash-delete">
+          <p class="text-green-600 text-center">{{ message }}</p>
+        </div>
+        {% endif %} {% endfor %}
+        <script>
+          setTimeout(function () {
+            var flash = document.getElementById("flash-delete");
+            if (flash) {
+              flash.style.display = "none";
+            }
+          }, 1000);
+        </script>
+        {% endif %} {% endwith %}
+        <table class="min-w-full border-collapse block md:table">
+          <thead class="block md:table-header-group">
+            <tr
+              class="border border-gray-300 md:border-none block md:table-row"
+            >
+              <th
+                class="p-2 text-left font-bold md:border md:border-gray-300 block md:table-cell"
+              >
+                ID
+              </th>
+              <th
+                class="p-2 text-left font-bold md:border md:border-gray-300 block md:table-cell"
+              >
+                A1
+              </th>
+              <th
+                class="p-2 text-left font-bold md:border md:border-gray-300 block md:table-cell"
+              >
+                A2
+              </th>
+              <th
+                class="p-2 text-left font-bold md:border md:border-gray-300 block md:table-cell"
+              >
+                A3
+              </th>
+              <th
+                class="p-2 text-left font-bold md:border md:border-gray-300 block md:table-cell"
+              >
+                A4
+              </th>
+              <th
+                class="p-2 text-left font-bold md:border md:border-gray-300 block md:table-cell"
+              >
+                A5
+              </th>
+              <th
+                class="p-2 text-left font-bold md:border md:border-gray-300 block md:table-cell"
+              >
+                A6
+              </th>
+              <th
+                class="p-2 text-left font-bold md:border md:border-gray-300 block md:table-cell"
+              >
+                A7
+              </th>
+              <th
+                class="p-2 text-left font-bold md:border md:border-gray-300 block md:table-cell"
+              >
+                A8
+              </th>
+              <th
+                class="p-2 text-left font-bold md:border md:border-gray-300 block md:table-cell"
+              >
+                A9
+              </th>
+              <th
+                class="p-2 text-left font-bold md:border md:border-gray-300 block md:table-cell"
+              >
+                A10
+              </th>
+              <th
+                class="p-2 text-left font-bold md:border md:border-gray-300 block md:table-cell"
+              >
+                Result
+              </th>
+              <th
+                class="p-2 text-left font-bold md:border md:border-gray-300 block md:table-cell"
+              >
+                Timestamp
+              </th>
+            </tr>
+          </thead>
+          <tbody class="block md:table-row-group">
+            {% for pred in predictions %}
+            <tr
+              class="border border-gray-300 md:border-none block md:table-row"
+            >
+              <td class="p-2 md:border md:border-gray-300 block md:table-cell">
+                {{ pred.id }}
+              </td>
+              <td class="p-2 md:border md:border-gray-300 block md:table-cell">
+                {{ pred.A1 }}
+              </td>
+              <td class="p-2 md:border md:border-gray-300 block md:table-cell">
+                {{ pred.A2 }}
+              </td>
+              <td class="p-2 md:border md:border-gray-300 block md:table-cell">
+                {{ pred.A3 }}
+              </td>
+              <td class="p-2 md:border md:border-gray-300 block md:table-cell">
+                {{ pred.A4 }}
+              </td>
+              <td class="p-2 md:border md:border-gray-300 block md:table-cell">
+                {{ pred.A5 }}
+              </td>
+              <td class="p-2 md:border md:border-gray-300 block md:table-cell">
+                {{ pred.A6 }}
+              </td>
+              <td class="p-2 md:border md:border-gray-300 block md:table-cell">
+                {{ pred.A7 }}
+              </td>
+              <td class="p-2 md:border md:border-gray-300 block md:table-cell">
+                {{ pred.A8 }}
+              </td>
+              <td class="p-2 md:border md:border-gray-300 block md:table-cell">
+                {{ pred.A9 }}
+              </td>
+              <td class="p-2 md:border md:border-gray-300 block md:table-cell">
+                {{ pred.A10 }}
+              </td>
+              <td class="p-2 md:border md:border-gray-300 block md:table-cell">
+                {{ pred.result }}
+              </td>
+              <td class="p-2 md:border md:border-gray-300 block md:table-cell">
+                {{ pred.timestamp.strftime("%Y-%m-%d %H:%M:%S %Z") if
+                pred.timestamp else '' }}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
